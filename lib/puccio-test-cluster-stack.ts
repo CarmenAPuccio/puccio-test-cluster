@@ -1,6 +1,8 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { Stack, StackProps } from '@aws-cdk/core';
 import { Construct } from 'constructs';
 import { App } from '@aws-cdk/core'
+import * as ec2 from '@aws-cdk/aws-ec2'
+import * as eks from '@aws-cdk/aws-eks'
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
 
 export class PuccioTestClusterStack extends Stack {
@@ -11,11 +13,24 @@ export class PuccioTestClusterStack extends Stack {
     const account = process.env.CDK_DEFAULT_ACCOUNT!;
     const region = process.env.CDK_DEFAULT_REGION;
     const env = { account: account, region: region };
+
+    const clusterProps: ssp.MngClusterProviderProps = {
+      minSize: 1,
+      maxSize: 5,
+      desiredSize: 3,
+      instanceTypes: [new ec2.InstanceType('m5.large')],
+      amiType: eks.NodegroupAmiType.AL2_X86_64,
+      nodeGroupCapacityType: eks.CapacityType.ON_DEMAND,
+      version: eks.KubernetesVersion.V1_20,
+      amiReleaseVersion: "1.20.4-20210519"
+  }
+  const clusterProvider = new ssp.MngClusterProvider(clusterProps);
     
     const blueprint = ssp.EksBlueprint.builder()
       .account(account)
       .region(region)
       .addOns()
+      .clusterProvider(clusterProvider)
       .teams();
     
       ssp.CodePipelineStack.builder()

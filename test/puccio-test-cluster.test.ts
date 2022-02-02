@@ -1,5 +1,5 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
+// import { Template } from '@aws-cdk/assertions';
+// import * as cdk from '@aws-cdk/core';
 // import * as PuccioTestCluster from '../lib/puccio-test-cluster-stack';
 
 // example test. To run these tests, uncomment this file along with the
