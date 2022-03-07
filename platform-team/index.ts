@@ -4,7 +4,7 @@ export class TeamPlatform extends PlatformTeam {
     constructor(accountID: string) {
         super({
             name: "team-platform",
-            userRoleArn: 'arn:aws:iam::' + accountID +':role/Admin'
+            userRoleArn: `arn:aws:iam::${accountID}:role/Admin`
         })
     }
 }
