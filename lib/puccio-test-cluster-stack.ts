@@ -4,6 +4,7 @@ import { App } from '@aws-cdk/core'
 import * as ec2 from '@aws-cdk/aws-ec2'
 import * as eks from '@aws-cdk/aws-eks'
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
+import { TeamPlatform } from '../platform-team';
 
 export class PuccioTestClusterStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -31,7 +32,7 @@ export class PuccioTestClusterStack extends Stack {
       .region(region)
       .addOns()
       .clusterProvider(clusterProvider)
-      .teams();
+      .teams(new TeamPlatform(account));
     
       ssp.CodePipelineStack.builder()
       .name("puccio-test-cluster-pipeline")
