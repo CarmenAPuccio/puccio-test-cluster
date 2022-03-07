@@ -21,8 +21,8 @@ export class PuccioTestClusterStack extends Stack {
       instanceTypes: [new ec2.InstanceType('m5.large')],
       amiType: eks.NodegroupAmiType.AL2_X86_64,
       nodeGroupCapacityType: eks.CapacityType.ON_DEMAND,
-      version: eks.KubernetesVersion.V1_20,
-      amiReleaseVersion: "1.20.4-20210519"
+      version: eks.KubernetesVersion.V1_21,
+      amiReleaseVersion: "1.21.5-20220226"
   }
   const clusterProvider = new ssp.MngClusterProvider(clusterProps);
     
