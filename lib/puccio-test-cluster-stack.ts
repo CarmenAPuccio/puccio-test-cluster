@@ -24,30 +24,35 @@ export class PuccioTestClusterStack extends Stack {
       nodeGroupCapacityType: eks.CapacityType.ON_DEMAND,
       version: eks.KubernetesVersion.V1_21,
       amiReleaseVersion: "1.21.5-20220303"
-  }
-  const clusterProvider = new ssp.MngClusterProvider(clusterProps);
-    
+    }
+    const clusterProvider = new ssp.MngClusterProvider(clusterProps);
+
     const blueprint = ssp.EksBlueprint.builder()
       .account(account)
       .region(region)
       .name("puccio-test-cluster")
-      .addOns()
-      .clusterProvider(clusterProvider)
+      .addOns(
+        new ssp.MetricsServerAddOn(),
+        new ssp.ContainerInsightsAddOn(),
+        new ssp.AwsLoadBalancerControllerAddOn(),
+        new ssp.SSMAgentAddOn(),
+        new ssp.XrayAddOn()
+      )
       .teams(new TeamPlatform(account));
-    
-      ssp.CodePipelineStack.builder()
+
+    ssp.CodePipelineStack.builder()
       .name("puccio-test-cluster-pipeline")
       .owner("CarmenAPuccio")
       .repository({
-          repoUrl: 'puccio-test-cluster',
-          credentialsSecretName: 'puccio-github-personal-access-token',
-          targetRevision: 'main'
+        repoUrl: 'puccio-test-cluster',
+        credentialsSecretName: 'puccio-github-personal-access-token',
+        targetRevision: 'main'
       })
-    
+
       .stage({
         id: 'prod',
         stackBuilder: blueprint.clone('us-east-1')
       })
-      .build(app, 'puccio-test-cluster-pipeline-stack', {env})
+      .build(app, 'puccio-test-cluster-pipeline-stack', { env })
   }
 }
