@@ -23,13 +23,14 @@ export class PuccioTestClusterStack extends Stack {
       amiType: eks.NodegroupAmiType.AL2_X86_64,
       nodeGroupCapacityType: eks.CapacityType.ON_DEMAND,
       version: eks.KubernetesVersion.V1_21,
-      amiReleaseVersion: "1.21.5-20220226"
+      amiReleaseVersion: "1.21.5-20220303"
   }
   const clusterProvider = new ssp.MngClusterProvider(clusterProps);
     
     const blueprint = ssp.EksBlueprint.builder()
       .account(account)
       .region(region)
+      .name("puccio-test-cluster")
       .addOns()
       .clusterProvider(clusterProvider)
       .teams(new TeamPlatform(account));
