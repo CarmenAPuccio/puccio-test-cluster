@@ -51,7 +51,7 @@ export class PuccioTestClusterStack extends Stack {
 
       .stage({
         id: 'prod',
-        stackBuilder: blueprint.clone('us-east-1')
+        stackBuilder: blueprint.clone().clusterProvider(clusterProvider)
       })
       .build(app, 'puccio-test-cluster-pipeline-stack', { env })
   }
