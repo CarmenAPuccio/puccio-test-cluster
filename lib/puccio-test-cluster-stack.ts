@@ -6,6 +6,8 @@ import * as eks from '@aws-cdk/aws-eks'
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
 import * as team from '../teams';
 
+const puccioManifestDir = './teams/team-puccio/manifests/'
+
 export class PuccioTestClusterStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -40,7 +42,7 @@ export class PuccioTestClusterStack extends Stack {
       )
       .teams(
         new team.TeamPlatform(account),
-        new team.TeamPuccio(account)
+        new team.TeamPuccio(account, puccioManifestDir)
         );
 
     ssp.CodePipelineStack.builder()
