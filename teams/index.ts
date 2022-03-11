@@ -1,2 +1,2 @@
-export { TeamPlatform } from './platform-team'
-export { TeamPuccio } from './puccio-team'
+export { TeamPlatform } from './team-platform'
+export { TeamPuccio } from './team-puccio'
