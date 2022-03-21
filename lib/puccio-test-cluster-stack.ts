@@ -6,7 +6,7 @@ import * as eks from '@aws-cdk/aws-eks'
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
 import * as team from '../teams';
 
-const puccioManifestDir = './teams/team-puccio/manifests/'
+const puccioManifestDir = '../teams/team-puccio/manifests/'
 
 export class PuccioTestClusterStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
