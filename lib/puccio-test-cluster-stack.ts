@@ -4,9 +4,9 @@ import { App } from '@aws-cdk/core'
 import * as ec2 from '@aws-cdk/aws-ec2'
 import * as eks from '@aws-cdk/aws-eks'
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
-import * as team from '../teams';
+import * as team from './teams';
 
-const puccioManifestDir = './teams/team-puccio/manifests/'
+const puccioManifestDir = './lib/teams/team-puccio/manifests/'
 
 export class PuccioTestClusterStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
