@@ -11,7 +11,7 @@ export class PuccioTestClusterStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const app = new cdk.App();
+    //const app = new cdk.App();
     const account = process.env.CDK_DEFAULT_ACCOUNT!;
     const region = process.env.CDK_DEFAULT_REGION;
     const env = { account: account, region: region };
@@ -58,6 +58,6 @@ export class PuccioTestClusterStack extends cdk.Stack {
         id: 'prod',
         stackBuilder: blueprint.clone().clusterProvider(clusterProvider)
       })
-      .build(app, 'puccio-test-cluster-pipeline-stack', { env })
+      .build(scope, 'puccio-test-cluster-pipeline-stack', { env })
   }
 }
