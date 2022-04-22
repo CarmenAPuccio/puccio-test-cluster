@@ -25,7 +25,7 @@ export class PuccioTestClusterStack extends cdk.Stack {
       amiType: eks.NodegroupAmiType.AL2_X86_64,
       nodeGroupCapacityType: eks.CapacityType.ON_DEMAND,
       version: eks.KubernetesVersion.V1_22,
-      amiReleaseVersion: "1.22.6-20220406"
+      amiReleaseVersion: "1.22.6-20220406",
     }
     const clusterProvider = new blueprints.MngClusterProvider(clusterProps);
 
@@ -38,7 +38,12 @@ export class PuccioTestClusterStack extends cdk.Stack {
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.SSMAgentAddOn(),
-        new blueprints.XrayAddOn()
+        new blueprints.XrayAddOn(),
+        new blueprints.ArgoCDAddOn({
+          adminPasswordSecretName: 'argo-admin-password-secret'
+        }
+          
+        )
       )
       .teams(
         new team.TeamPlatform(account),
