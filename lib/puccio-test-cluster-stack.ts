@@ -36,7 +36,6 @@ export class PuccioTestClusterStack extends cdk.Stack {
       .addOns(
         new blueprints.MetricsServerAddOn(),
         new blueprints.ContainerInsightsAddOn(),
-        new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.SSMAgentAddOn(),
         new blueprints.XrayAddOn(),
         new blueprints.ArgoCDAddOn({
