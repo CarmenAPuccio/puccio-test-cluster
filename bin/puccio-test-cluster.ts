@@ -4,7 +4,11 @@ import * as cdk from 'aws-cdk-lib';
 import { PuccioTestClusterStack } from '../lib/puccio-test-cluster-stack';
 
 const app = new cdk.App();
-new PuccioTestClusterStack(app, 'PuccioTestClusterStack', {
+const account = process.env.CDK_DEFAULT_ACCOUNT!;
+const region = process.env.CDK_DEFAULT_REGION;
+const env = { account: account, region: region };
+
+new PuccioTestClusterStack(app, 'PuccioTestClusterStack', { env
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */

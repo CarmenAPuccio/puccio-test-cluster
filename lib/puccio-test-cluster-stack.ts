@@ -11,10 +11,8 @@ export class PuccioTestClusterStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    //const app = new cdk.App();
-    const account = process.env.CDK_DEFAULT_ACCOUNT!;
-    const region = process.env.CDK_DEFAULT_REGION;
-    const env = { account: account, region: region };
+    const account = props?.env?.account!;
+    const region = props?.env?.region!;
 
     const clusterProps: blueprints.MngClusterProviderProps = {
       minSize: 1,
@@ -40,16 +38,14 @@ export class PuccioTestClusterStack extends cdk.Stack {
         new blueprints.XrayAddOn(),
         new blueprints.ArgoCDAddOn({
           adminPasswordSecretName: 'argo-admin-password-secret'
-        }
-          
-        )
+        })
       )
       .teams(
         new team.TeamPlatform(account),
         new team.TeamPuccio(account, puccioManifestDir)
-        );
+      );
 
-        blueprints.CodePipelineStack.builder()
+    blueprints.CodePipelineStack.builder()
       .name("puccio-test-cluster-pipeline")
       .owner("CarmenAPuccio")
       .repository({
@@ -62,6 +58,6 @@ export class PuccioTestClusterStack extends cdk.Stack {
         id: 'prod',
         stackBuilder: blueprint.clone().clusterProvider(clusterProvider)
       })
-      .build(scope, 'puccio-test-cluster-pipeline-stack', { env })
+      .build(scope, id+'-stack', props )
   }
 }
